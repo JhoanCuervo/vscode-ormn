@@ -1,9 +1,10 @@
 {
   "publisher": "JhoanNicolasCuervoLozada",
   "name": "ormn-snippets",
-  "displayName": "%ormn-snippets.displayName%",
-  "description": "%ormn-snippets.description%",
-  "version": "0.0.1",
+  "displayName": "ORMN Snippets",
+  "description": "IntelliSense y snippets para ORMN (ORM de Google Sheets). Español/Inglés.",
+  "version": "0.0.2",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.118.0"
   },
@@ -22,7 +23,7 @@
   "contributes": {
     "commands": [{
       "command": "ormn-snippets.helloWorld",
-      "title": "%ormn-snippets.helloWorld%"
+      "title": "Hello World (ORMN)"
     }],
     "snippets": [{
       "language": "javascript",
