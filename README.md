@@ -1,65 +1,97 @@
-# ormn-snippets README
+# ORMN Snippets para VS Code
 
-This is the README for your extension "ormn-snippets". After writing up a brief description, we recommend including the following sections.
+Extensión de VS Code que agrega **IntelliSense** y **snippets** para trabajar con [ORMN](https://github.com/JhoanCuervo/ORMN), el ORM ligero para Google Apps Script que convierte Google Sheets en una base de datos.
 
-## Features
+## Características
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- **Autocompletado**: al escribir `.` después de cualquier objeto, sugiere los ~30 métodos de ORMN con firma y documentación
+- **20 snippets**: prefijos `ormn-*` que expanden código listo para usar
+- **Dos idiomas**: documentación, tooltips y snippets en español e inglés, se adapta al idioma de VS Code
 
-For example if there is an image subfolder under your extension project workspace:
+## Uso
 
-\!\[feature X\]\(images/feature-x.png\)
+### Snippets
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Escribí el prefijo en un archivo `.js` y presioná `Tab` o `Enter`:
 
-## Requirements
+| Prefijo | Descripción |
+|---------|-------------|
+| `ormn-open` | Abrir base de datos + obtener tablas |
+| `ormn-openOpts` | Abrir con las 7 opciones de configuración |
+| `ormn-all` | Obtener todos los registros + iterar |
+| `ormn-find` | Buscar registro por ID |
+| `ormn-firstBy` | Primera coincidencia por columna y valor |
+| `ormn-firstByCI` | Primera coincidencia (case-insensitive) |
+| `ormn-findManyBy` | Varias coincidencias por columna |
+| `ormn-findManyByCI` | Varias coincidencias (case-insensitive) |
+| `ormn-firstByQuery` | Primera coincidencia con expresión JS |
+| `ormn-findManyByQuery` | Varias coincidencias con expresión JS |
+| `ormn-exist` | Verificar existencia + bloque `if` |
+| `ormn-count` | Contar registros |
+| `ormn-lastRow` | Última fila registrada |
+| `ormn-create` | Insertar un registro |
+| `ormn-createMany` | Insertar varios registros a la vez |
+| `ormn-save` | Buscar, modificar y guardar cambios |
+| `ormn-delete` | Buscar y eliminar una fila |
+| `ormn-deleteMany` | Eliminar por búsqueda masiva |
+| `ormn-deleteAll` | Eliminar todos los registros (¡cuidado!) |
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Autocompletado
 
-## Extension Settings
+Al escribir `.` en un archivo JavaScript, VS Code muestra todos los métodos disponibles agrupados por tipo de ícono:
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+**🔧 Métodos** — funciones que ejecutan acciones:
 
-For example:
+| Nivel | Métodos |
+|-------|---------|
+| `ORMN` | `openDb` |
+| `db` | `_getTables` |
+| `tabla` | `_count`, `_lastRow`, `_all`, `_find`, `_firstBy`, `_findManyBy`, `_firstByQuery`, `_findManyByQuery`, `_exist`, `_create`, `_createMany`, `_deleteAll` |
+| `fila` | `_save`, `_delete` |
+| `resultado` | `_delete` |
 
-This extension contributes the following settings:
+**📦 Propiedades** — datos accesibles directamente:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+| Nivel | Propiedades |
+|-------|-------------|
+| `db` | `_name`, `_id`, `_url` |
+| `tabla` | `_headers`, `_name`, `_index`, `_sheetId` |
+| `fila` | `_rowIndex` |
+| `resultado` | `data` |
 
-## Known Issues
+Cada método muestra su firma y documentación en el tooltip. VS Code filtra automáticamente según lo que escribas: al escribir `_` después del punto solo aparecen los métodos con ese prefijo.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Ejemplo de flujo
 
-## Release Notes
+```js
+// Escribí ormn-open → Tab
+const db = ORMN.openDb('spreadsheetId')
+const { Tabla } = db._getTables()
 
-Users appreciate release notes as you update your extension.
+// Escribí Tabla. → autocompletado muestra todos los métodos
+// Escribí Tabla._ → autocompletado filtra métodos con _
+const { data } = Tabla._all()
+data.forEach(fila => console.log(fila))
 
-### 1.0.0
+// Escribí ormn-find → Tab
+const fila = Tabla._find('id')
 
-Initial release of ...
+// Escribí ormn-save → Tab
+const fila = Tabla._find('id')
+fila.campo = 'nuevo valor'
+fila._save()
+```
 
-### 1.0.1
+## Requisitos
 
-Fixed issue #.
+- VS Code 1.118 o superior
+- Usar la extensión en archivos JavaScript
 
-### 1.1.0
+## Notas de versión
 
-Added features X, Y, and Z.
+### 0.0.1
 
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+- Versión inicial
+- Autocompletado de ~30 métodos y propiedades ORMN
+- 20 snippets con prefijo `ormn-`
+- Soporte español/inglés (i18n)
