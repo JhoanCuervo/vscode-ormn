@@ -1,0 +1,180 @@
+{
+    "ORMN: open database": {
+        "prefix": "ormn-open",
+        "body": [
+            "const db = ORMN.openDb('${1:spreadsheetId}')",
+            "const { ${2:Table} } = db._getTables()",
+            "$0"
+        ],
+        "description": "Opens a Google Sheet as an ORMN database and gets the tables"
+    },
+    "ORMN: find by id": {
+        "prefix": "ormn-find",
+        "body": [
+            "const ${1:row} = ${2:table}._find('${3:id}')",
+            "$0"
+        ],
+        "description": "Searches for a record by its ID (case-insensitive)"
+    },
+    "ORMN: all records": {
+        "prefix": "ormn-all",
+        "body": [
+            "const { data } = ${1:table}._all()",
+            "data.forEach(row => ${2:console.log(row)})",
+            "$0"
+        ],
+        "description": "Gets all records from a table"
+    },
+    "ORMN: count records": {
+        "prefix": "ormn-count",
+        "body": [
+            "const total = ${1:table}._count()",
+            "$0"
+        ],
+        "description": "Total number of data rows in a table"
+    },
+    "ORMN: last row": {
+        "prefix": "ormn-lastRow",
+        "body": [
+            "const last = ${1:table}._lastRow()",
+            "$0"
+        ],
+        "description": "Gets the last registered row in the table"
+    },
+    "ORMN: first by column": {
+        "prefix": "ormn-firstBy",
+        "body": [
+            "const ${1:row} = ${2:table}._firstBy('${3:column}', '${4:value}')",
+            "$0"
+        ],
+        "description": "Finds the first match by column and value"
+    },
+    "ORMN: first by column (case-insensitive)": {
+        "prefix": "ormn-firstByCI",
+        "body": [
+            "const ${1:row} = ${2:table}._firstBy('${3:column}', '${4:value}', { caseInsensitive: true })",
+            "$0"
+        ],
+        "description": "Finds the first match by column and value (case-insensitive)"
+    },
+    "ORMN: find many by column": {
+        "prefix": "ormn-findManyBy",
+        "body": [
+            "const { data } = ${1:table}._findManyBy('${2:column}', '${3:value}')",
+            "data.forEach(row => ${4:console.log(row)})",
+            "$0"
+        ],
+        "description": "Finds all records matching a value in a column"
+    },
+    "ORMN: find many by column (case-insensitive)": {
+        "prefix": "ormn-findManyByCI",
+        "body": [
+            "const { data } = ${1:table}._findManyBy('${2:column}', '${3:value}', { caseInsensitive: true })",
+            "data.forEach(row => ${4:console.log(row)})",
+            "$0"
+        ],
+        "description": "Finds all records matching (case-insensitive)"
+    },
+    "ORMN: first by query": {
+        "prefix": "ormn-firstByQuery",
+        "body": [
+            "const ${1:row} = ${2:table}._firstByQuery(`{}.${3:field} ${4:===} ${5:'value'}`)",
+            "$0"
+        ],
+        "description": "Finds the first match using a JS expression"
+    },
+    "ORMN: find many by query": {
+        "prefix": "ormn-findManyByQuery",
+        "body": [
+            "const { data } = ${1:table}._findManyByQuery(`{}.${2:field} ${3:===} ${4:'value'}`)",
+            "data.forEach(row => ${5:console.log(row)})",
+            "$0"
+        ],
+        "description": "Finds all matches using a JS expression"
+    },
+    "ORMN: exist": {
+        "prefix": "ormn-exist",
+        "body": [
+            "if (${1:table}._exist('${2:column}', '${3:value}')) {",
+            "\t${4:// exists}",
+            "}",
+            "$0"
+        ],
+        "description": "Checks if at least one record exists with that value"
+    },
+    "ORMN: create record": {
+        "prefix": "ormn-create",
+        "body": [
+            "const ${1:newRecord} = ${2:table}._create({",
+            "\tid: Utilities.getUuid(),",
+            "\t${3:field}: ${4:'value'},",
+            "})",
+            "$0"
+        ],
+        "description": "Inserts a new record into the table"
+    },
+    "ORMN: create many records": {
+        "prefix": "ormn-createMany",
+        "body": [
+            "const { data } = ${1:table}._createMany([",
+            "\t{ id: Utilities.getUuid(), ${2:field}: ${3:'value'} },",
+            "\t{ id: Utilities.getUuid(), ${2:field}: ${4:'value'} },",
+            "])",
+            "$0"
+        ],
+        "description": "Inserts multiple rows at once. Result has _delete() to undo"
+    },
+    "ORMN: save row": {
+        "prefix": "ormn-save",
+        "body": [
+            "const ${1:row} = ${2:table}._find('${3:id}')",
+            "${1:row}.${4:field} = ${5:'new value'}",
+            "${1:row}._save()",
+            "$0"
+        ],
+        "description": "Modifies and persists row changes in the sheet"
+    },
+    "ORMN: delete row": {
+        "prefix": "ormn-delete",
+        "body": [
+            "const ${1:row} = ${2:table}._find('${3:id}')",
+            "${1:row}._delete()",
+            "$0"
+        ],
+        "description": "Deletes an individual row from the sheet"
+    },
+    "ORMN: delete many rows": {
+        "prefix": "ormn-deleteMany",
+        "body": [
+            "const result = ${1:table}._findManyBy('${2:column}', '${3:value}')",
+            "result._delete()",
+            "$0"
+        ],
+        "description": "Deletes all rows matching the search"
+    },
+    "ORMN: delete all rows": {
+        "prefix": "ormn-deleteAll",
+        "body": [
+            "${1:table}._deleteAll()",
+            "$0"
+        ],
+        "description": "Deletes ALL records from the table (keeps headers). CAREFUL!"
+    },
+    "ORMN: openDb with options": {
+        "prefix": "ormn-openOpts",
+        "body": [
+            "const db = ORMN.openDb('${1:spreadsheetId}', {",
+            "\tenableDelete: ${2:true},",
+            "\tenableDeleteMany: ${3:true},",
+            "\tenableDeleteAll: ${4:true},",
+            "\tenableSave: ${5:true},",
+            "\tincludeSpreadsheetMeta: ${6:true},",
+            "\tincludeSheetMeta: ${7:true},",
+            "\tincludeRowIndex: ${8:true},",
+            "})",
+            "const { ${9:Table} } = db._getTables()",
+            "$0"
+        ],
+        "description": "Opens an ORMN database with configuration options"
+    }
+}

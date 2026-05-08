@@ -1,0 +1,117 @@
+{
+    "helloWorld": "ORMN Snippets: IntelliSense for ORMN (Google Sheets ORM) active.",
+    "dbMethods": {
+        "openDb": {
+            "firma": "(ssId: string, options?: object) => Spreadsheet",
+            "docs": "Opens a Google Spreadsheet as an ORMN database.\n\n`options`:\n- `includeSpreadsheetMeta` (true)\n- `includeSheetMeta` (true)\n- `includeRowIndex` (true)\n- `enableDelete` (true)\n- `enableDeleteMany` (true)\n- `enableDeleteAll` (true)\n- `enableSave` (true)"
+        }
+    },
+    "dbInstanceMethods": {
+        "_getTables": {
+            "firma": "() => { [sheetName: string]: Table }",
+            "docs": "Discovers and returns all sheets as tables with injected methods"
+        },
+        "_name": {
+            "tipo": "string",
+            "docs": "Spreadsheet name"
+        },
+        "_id": {
+            "tipo": "string",
+            "docs": "Spreadsheet ID"
+        },
+        "_url": {
+            "tipo": "string",
+            "docs": "Spreadsheet URL"
+        }
+    },
+    "tableMethods": {
+        "_headers": {
+            "tipo": "string[]",
+            "docs": "Column names (first row of the sheet)"
+        },
+        "_name": {
+            "tipo": "string",
+            "docs": "Sheet tab name"
+        },
+        "_index": {
+            "tipo": "number",
+            "docs": "Sheet index in the spreadsheet"
+        },
+        "_sheetId": {
+            "tipo": "number",
+            "docs": "Internal sheet ID"
+        },
+        "_count": {
+            "firma": "() => number",
+            "docs": "Total number of data rows"
+        },
+        "_lastRow": {
+            "firma": "() => object | undefined",
+            "docs": "Last registered row in the table"
+        },
+        "_all": {
+            "firma": "() => { data: object[] }",
+            "docs": "All records in the table"
+        },
+        "_find": {
+            "firma": "(id: string) => object | null",
+            "docs": "Searches for a record by its ID (case-insensitive)"
+        },
+        "_firstBy": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => object | null",
+            "docs": "First row matching the column value"
+        },
+        "_findManyBy": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => { data: object[], _delete() }",
+            "docs": "All rows matching the column value"
+        },
+        "_firstByQuery": {
+            "firma": "(query: string) => object | null",
+            "docs": "First match using a JS expression. Use `{}` as row placeholder.\n\nE.g.: `{}.Value > 1000`"
+        },
+        "_findManyByQuery": {
+            "firma": "(query: string) => { data: object[], _delete() }",
+            "docs": "All matches using a JS expression. Use `{}` as row placeholder.\n\nE.g.: `{}.Status === \"income\"`"
+        },
+        "_exist": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => boolean",
+            "docs": "Checks if at least one record exists with that value"
+        },
+        "_create": {
+            "firma": "(data: object) => object",
+            "docs": "Inserts a new row. Auto-generates headers if missing.\n\nReturns the object with `_save()`, `_delete()` and `_rowIndex`."
+        },
+        "_createMany": {
+            "firma": "(dataArray: object[]) => { data: object[], _delete() }",
+            "docs": "Inserts multiple rows at once. Returns result with `_delete()` to undo."
+        },
+        "_deleteAll": {
+            "firma": "() => void",
+            "docs": "Deletes all records from the table (keeps headers). CAREFUL!"
+        }
+    },
+    "rowMethods": {
+        "_save": {
+            "firma": "() => void",
+            "docs": "Persists changes to the row in the sheet. Modify properties and call `_save()`."
+        },
+        "_delete": {
+            "firma": "() => void",
+            "docs": "Deletes this row from the sheet"
+        },
+        "_rowIndex": {
+            "tipo": "number",
+            "docs": "Row index in the sheet (0-based)"
+        }
+    },
+    "resultMethods": {
+        "_delete": {
+            "firma": "() => void",
+            "docs": "Deletes all rows from the search or batch result"
+        },
+        "data": {
+            "tipo": "object[]",
+            "docs": "Array with the result records"
+        }
+    }
+}

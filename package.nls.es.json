@@ -1,0 +1,5 @@
+{
+    "ormn-snippets.helloWorld": "Hola Mundo",
+    "ormn-snippets.displayName": "ORMN Snippets",
+    "ormn-snippets.description": "Snippets e IntelliSense para ORMN (ORM de Google Sheets)"
+}

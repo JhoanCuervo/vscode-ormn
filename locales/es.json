@@ -1,0 +1,117 @@
+{
+    "helloWorld": "ORMN Snippets: IntelliSense para ORMN (ORM de Google Sheets) activo.",
+    "dbMethods": {
+        "openDb": {
+            "firma": "(ssId: string, options?: object) => Spreadsheet",
+            "docs": "Abre un Google Spreadsheet como base de datos ORMN.\n\n`options`:\n- `includeSpreadsheetMeta` (true)\n- `includeSheetMeta` (true)\n- `includeRowIndex` (true)\n- `enableDelete` (true)\n- `enableDeleteMany` (true)\n- `enableDeleteAll` (true)\n- `enableSave` (true)"
+        }
+    },
+    "dbInstanceMethods": {
+        "_getTables": {
+            "firma": "() => { [sheetName: string]: Table }",
+            "docs": "Descubre y devuelve todas las pestañas como tablas con métodos inyectados"
+        },
+        "_name": {
+            "tipo": "string",
+            "docs": "Nombre del spreadsheet"
+        },
+        "_id": {
+            "tipo": "string",
+            "docs": "ID del spreadsheet"
+        },
+        "_url": {
+            "tipo": "string",
+            "docs": "URL del spreadsheet"
+        }
+    },
+    "tableMethods": {
+        "_headers": {
+            "tipo": "string[]",
+            "docs": "Nombres de las columnas (primera fila del sheet)"
+        },
+        "_name": {
+            "tipo": "string",
+            "docs": "Nombre de la pestaña/hoja"
+        },
+        "_index": {
+            "tipo": "number",
+            "docs": "Índice de la pestaña en el spreadsheet"
+        },
+        "_sheetId": {
+            "tipo": "number",
+            "docs": "ID interno de la hoja"
+        },
+        "_count": {
+            "firma": "() => number",
+            "docs": "Cantidad total de filas de datos"
+        },
+        "_lastRow": {
+            "firma": "() => object | undefined",
+            "docs": "Última fila registrada en la tabla"
+        },
+        "_all": {
+            "firma": "() => { data: object[] }",
+            "docs": "Todos los registros de la tabla"
+        },
+        "_find": {
+            "firma": "(id: string) => object | null",
+            "docs": "Busca un registro por su ID (no distingue mayúsculas/minúsculas)"
+        },
+        "_firstBy": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => object | null",
+            "docs": "Primera fila que coincide con el valor en una columna"
+        },
+        "_findManyBy": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => { data: object[], _delete() }",
+            "docs": "Todas las filas que coinciden con el valor en una columna"
+        },
+        "_firstByQuery": {
+            "firma": "(query: string) => object | null",
+            "docs": "Primera coincidencia usando expresión JS. Usa `{}` como placeholder de cada fila.\n\nEj: `{}.Value > 1000`"
+        },
+        "_findManyByQuery": {
+            "firma": "(query: string) => { data: object[], _delete() }",
+            "docs": "Todas las coincidencias usando expresión JS. Usa `{}` como placeholder.\n\nEj: `{}.Status === \"income\"`"
+        },
+        "_exist": {
+            "firma": "(col: string, val: any, opts?: { caseInsensitive?: boolean }) => boolean",
+            "docs": "Verifica si existe al menos un registro con ese valor"
+        },
+        "_create": {
+            "firma": "(data: object) => object",
+            "docs": "Inserta una nueva fila. Si no hay headers, los genera automáticamente.\n\nRetorna el objeto con `_save()`, `_delete()` y `_rowIndex`."
+        },
+        "_createMany": {
+            "firma": "(dataArray: object[]) => { data: object[], _delete() }",
+            "docs": "Inserta varias filas a la vez. Retorna resultado con `_delete()` para deshacer."
+        },
+        "_deleteAll": {
+            "firma": "() => void",
+            "docs": "Elimina todos los registros de la tabla (conserva los headers). ¡CUIDADO!"
+        }
+    },
+    "rowMethods": {
+        "_save": {
+            "firma": "() => void",
+            "docs": "Persiste los cambios de la fila en el sheet. Modificá las propiedades y llamá a `_save()`."
+        },
+        "_delete": {
+            "firma": "() => void",
+            "docs": "Elimina esta fila del sheet"
+        },
+        "_rowIndex": {
+            "tipo": "number",
+            "docs": "Índice de la fila en el sheet (basado en 0)"
+        }
+    },
+    "resultMethods": {
+        "_delete": {
+            "firma": "() => void",
+            "docs": "Elimina todas las filas del resultado de búsqueda o lote"
+        },
+        "data": {
+            "tipo": "object[]",
+            "docs": "Array con los registros del resultado"
+        }
+    }
+}

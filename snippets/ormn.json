@@ -1,0 +1,180 @@
+{
+    "ORMN: abrir base de datos": {
+        "prefix": "ormn-open",
+        "body": [
+            "const db = ORMN.openDb('${1:spreadsheetId}')",
+            "const { ${2:Tabla} } = db._getTables()",
+            "$0"
+        ],
+        "description": "Abre un Google Sheet como base de datos ORMN y obtiene las tablas"
+    },
+    "ORMN: buscar por id": {
+        "prefix": "ormn-find",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._find('${3:id}')",
+            "$0"
+        ],
+        "description": "Busca un registro por su ID (no distingue mayúsculas/minúsculas)"
+    },
+    "ORMN: todos los registros": {
+        "prefix": "ormn-all",
+        "body": [
+            "const { data } = ${1:tabla}._all()",
+            "data.forEach(fila => ${2:console.log(fila)})",
+            "$0"
+        ],
+        "description": "Obtiene todos los registros de una tabla"
+    },
+    "ORMN: contar registros": {
+        "prefix": "ormn-count",
+        "body": [
+            "const total = ${1:tabla}._count()",
+            "$0"
+        ],
+        "description": "Cantidad total de filas de datos en una tabla"
+    },
+    "ORMN: última fila": {
+        "prefix": "ormn-lastRow",
+        "body": [
+            "const ultimo = ${1:tabla}._lastRow()",
+            "$0"
+        ],
+        "description": "Obtiene la última fila registrada en la tabla"
+    },
+    "ORMN: primera coincidencia por columna": {
+        "prefix": "ormn-firstBy",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._firstBy('${3:columna}', '${4:valor}')",
+            "$0"
+        ],
+        "description": "Busca la primera coincidencia por columna y valor"
+    },
+    "ORMN: primera coincidencia (case-insensitive)": {
+        "prefix": "ormn-firstByCI",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._firstBy('${3:columna}', '${4:valor}', { caseInsensitive: true })",
+            "$0"
+        ],
+        "description": "Busca la primera coincidencia por columna y valor (no distingue mayúsculas/minúsculas)"
+    },
+    "ORMN: varias coincidencias por columna": {
+        "prefix": "ormn-findManyBy",
+        "body": [
+            "const { data } = ${1:tabla}._findManyBy('${2:columna}', '${3:valor}')",
+            "data.forEach(fila => ${4:console.log(fila)})",
+            "$0"
+        ],
+        "description": "Busca todos los registros que coincidan con un valor en una columna"
+    },
+    "ORMN: varias coincidencias (case-insensitive)": {
+        "prefix": "ormn-findManyByCI",
+        "body": [
+            "const { data } = ${1:tabla}._findManyBy('${2:columna}', '${3:valor}', { caseInsensitive: true })",
+            "data.forEach(fila => ${4:console.log(fila)})",
+            "$0"
+        ],
+        "description": "Busca todos los registros que coincidan (no distingue mayúsculas/minúsculas)"
+    },
+    "ORMN: primera coincidencia por query": {
+        "prefix": "ormn-firstByQuery",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._firstByQuery(`{}.${3:campo} ${4:===} ${5:'valor'}`)",
+            "$0"
+        ],
+        "description": "Busca la primera coincidencia usando una expresión JS"
+    },
+    "ORMN: varias coincidencias por query": {
+        "prefix": "ormn-findManyByQuery",
+        "body": [
+            "const { data } = ${1:tabla}._findManyByQuery(`{}.${2:campo} ${3:===} ${4:'valor'}`)",
+            "data.forEach(fila => ${5:console.log(fila)})",
+            "$0"
+        ],
+        "description": "Busca todas las coincidencias usando una expresión JS"
+    },
+    "ORMN: verificar existencia": {
+        "prefix": "ormn-exist",
+        "body": [
+            "if (${1:tabla}._exist('${2:columna}', '${3:valor}')) {",
+            "\t${4:// existe}",
+            "}",
+            "$0"
+        ],
+        "description": "Verifica si existe al menos un registro con ese valor"
+    },
+    "ORMN: crear registro": {
+        "prefix": "ormn-create",
+        "body": [
+            "const ${1:nuevo} = ${2:tabla}._create({",
+            "\tid: Utilities.getUuid(),",
+            "\t${3:campo}: ${4:'valor'},",
+            "})",
+            "$0"
+        ],
+        "description": "Inserta un nuevo registro en la tabla"
+    },
+    "ORMN: crear varios registros": {
+        "prefix": "ormn-createMany",
+        "body": [
+            "const { data } = ${1:tabla}._createMany([",
+            "\t{ id: Utilities.getUuid(), ${2:campo}: ${3:'valor'} },",
+            "\t{ id: Utilities.getUuid(), ${2:campo}: ${4:'valor'} },",
+            "])",
+            "$0"
+        ],
+        "description": "Inserta varias filas a la vez. El resultado tiene _delete() para deshacer"
+    },
+    "ORMN: guardar cambios": {
+        "prefix": "ormn-save",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._find('${3:id}')",
+            "${1:fila}.${4:campo} = ${5:'nuevo valor'}",
+            "${1:fila}._save()",
+            "$0"
+        ],
+        "description": "Modifica y persiste los cambios de una fila en el sheet"
+    },
+    "ORMN: eliminar fila": {
+        "prefix": "ormn-delete",
+        "body": [
+            "const ${1:fila} = ${2:tabla}._find('${3:id}')",
+            "${1:fila}._delete()",
+            "$0"
+        ],
+        "description": "Elimina una fila individual del sheet"
+    },
+    "ORMN: eliminar varias filas": {
+        "prefix": "ormn-deleteMany",
+        "body": [
+            "const resultado = ${1:tabla}._findManyBy('${2:columna}', '${3:valor}')",
+            "resultado._delete()",
+            "$0"
+        ],
+        "description": "Elimina todas las filas que coinciden con la búsqueda"
+    },
+    "ORMN: eliminar todas las filas": {
+        "prefix": "ormn-deleteAll",
+        "body": [
+            "${1:tabla}._deleteAll()",
+            "$0"
+        ],
+        "description": "Elimina TODOS los registros de la tabla (conserva headers). ¡CUIDADO!"
+    },
+    "ORMN: abrir con opciones": {
+        "prefix": "ormn-openOpts",
+        "body": [
+            "const db = ORMN.openDb('${1:spreadsheetId}', {",
+            "\tenableDelete: ${2:true},",
+            "\tenableDeleteMany: ${3:true},",
+            "\tenableDeleteAll: ${4:true},",
+            "\tenableSave: ${5:true},",
+            "\tincludeSpreadsheetMeta: ${6:true},",
+            "\tincludeSheetMeta: ${7:true},",
+            "\tincludeRowIndex: ${8:true},",
+            "})",
+            "const { ${9:Tabla} } = db._getTables()",
+            "$0"
+        ],
+        "description": "Abre una base de datos ORMN con opciones de configuración"
+    }
+}
