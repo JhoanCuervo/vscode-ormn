@@ -6,6 +6,11 @@
   "engines": {
     "vscode": "^1.118.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JhoanCuervo/vscode-ormn"
+  },
+  "license": "MIT",
   "categories": [
     "Other"
   ],
